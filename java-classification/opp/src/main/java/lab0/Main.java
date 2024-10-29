@@ -2,6 +2,8 @@ package lab0;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,24 +11,47 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Main {
     public static void main(String[] args) {
         try {
-            // init json reader
+            // setup mapper
             ObjectMapper mapper = new ObjectMapper();
             
             // try read file
-            File inputFile = new File("opp/src/main/resources/test-input.json");
+            File inputFile = new File("opp/src/main/resources/input.json");
             JsonNode rootNode = mapper.readTree(inputFile);
-            JsonNode aliens = rootNode.get("data");
+            JsonNode aliensJson = rootNode.get("data");
             
-            // print each alien for testing
-            System.out.println("found " + aliens.size() + " aliens:");
-            for (JsonNode alien : aliens) {
-                System.out.println("-----------------");
-                System.out.println("id: " + alien.get("id").asText());
-                if (alien.has("planet")) {
-                    System.out.println("planet: " + alien.get("planet").asText());
+            // store all aliens here
+            List<Alien> allAliens = new ArrayList<>();
+            
+            // convert each json to alien object
+            for (JsonNode alienJson : aliensJson) {
+                try {
+                    Alien alien = mapper.treeToValue(alienJson, Alien.class);
+                    allAliens.add(alien);
+                } catch (Exception e) {
+                    // skip bad aliens
+                    System.out.println("failed to parse alien: " + alienJson);
                 }
-                if (alien.has("isHumanoid")) {
-                    System.out.println("humanoid: " + alien.get("isHumanoid").asText());
+            }
+            
+            // print all aliens
+            System.out.println("\nAll aliens loaded: " + allAliens.size());
+            for (Alien a : allAliens) {
+                System.out.println(a);
+            }
+            
+            // do some testing with filters
+            System.out.println("\nJust humanoid aliens:");
+            for (Alien a : allAliens) {
+                if (a.getIsHumanoid() != null && a.getIsHumanoid()) {
+                    System.out.println("- " + a.getPlanet());
+                }
+            }
+            
+            // test filtering by id
+            System.out.println("\nAliens with even IDs:");
+            for (Alien a : allAliens) {
+                if (a.getId() % 2 == 0) {
+                    System.out.println("- ID " + a.getId());
                 }
             }
             
