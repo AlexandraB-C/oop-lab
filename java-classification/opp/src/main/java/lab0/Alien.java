@@ -2,7 +2,10 @@ package lab0;
 
 import java.util.List;
 
-// added more fields to match json
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+// no null fields in json output
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Alien {
     private int id;
     private Boolean isHumanoid;
@@ -10,21 +13,10 @@ public class Alien {
     private Integer age;
     private List<String> traits;
     
-    // empty constructor 
+    // constructors and getters/setters same as before...
     public Alien() {
     }
 
-    // basic toString for testing
-    @Override
-    public String toString() {
-        return "Alien{" +
-            "id=" + id +
-            ", planet='" + planet + '\'' +
-            ", traits=" + traits +
-            '}';
-    }
-    
-    // all getters/setters needed for json mapping
     public int getId() {
         return id;
     }

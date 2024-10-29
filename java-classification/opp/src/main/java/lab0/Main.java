@@ -28,41 +28,47 @@ public class Main {
             universes.put("marvel", new ArrayList<>());
             universes.put("rings", new ArrayList<>());
             
-            // read and classify aliens
-            int total = 0;
-            int classified = 0;
-            
+            // classify aliens
             for (JsonNode alienJson : aliensJson) {
-                total++;
                 try {
-                    // convert json to alien
                     Alien alien = mapper.treeToValue(alienJson, Alien.class);
-                    
-                    // classify alien
                     String universe = Classifier.classifyAlien(alien);
                     universes.get(universe).add(alien);
-                    classified++;
-                    
-                    // debug print
-                    System.out.println("Alien " + alien.getId() + " from " + 
-                                     alien.getPlanet() + " -> " + universe);
-                    
                 } catch (Exception e) {
                     System.out.println("failed to process alien: " + e.getMessage());
                 }
             }
             
-            // print results
-            System.out.println("\nClassification results:");
-            System.out.println("Total aliens: " + total);
-            System.out.println("Successfully classified: " + classified);
-            System.out.println("\nAliens per universe:");
+            // make output folder
+            File outputDir = new File("opp/src/main/resources/output");
+            outputDir.mkdirs();
+            
+            // save each universe to its own file
             for (Map.Entry<String, List<Alien>> entry : universes.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue().size() + " aliens");
+                try {
+                    String name = entry.getKey();
+                    List<Alien> aliens = entry.getValue();
+                    
+                    // create output object
+                    Map<String, Object> output = new HashMap<>();
+                    output.put("universe", name);
+                    output.put("aliens", aliens);
+                    
+                    // save to file
+                    File outFile = new File(outputDir, name.toLowerCase() + ".json");
+                    mapper.writerWithDefaultPrettyPrinter()
+                          .writeValue(outFile, output);
+                    
+                    System.out.println("Saved " + aliens.size() + 
+                                     " aliens to " + outFile.getName());
+                    
+                } catch (IOException e) {
+                    System.out.println("failed to save universe: " + e.getMessage());
+                }
             }
             
         } catch (IOException e) {
-            System.out.println("failed to read json: " + e.getMessage());
+            System.out.println("failed to read input: " + e.getMessage());
         }
     }
 }
