@@ -3,7 +3,9 @@ package lab0;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,40 +21,44 @@ public class Main {
             JsonNode rootNode = mapper.readTree(inputFile);
             JsonNode aliensJson = rootNode.get("data");
             
-            // store all aliens here
-            List<Alien> allAliens = new ArrayList<>();
+            // setup universes
+            Map<String, List<Alien>> universes = new HashMap<>();
+            universes.put("starWars", new ArrayList<>());
+            universes.put("hitchHiker", new ArrayList<>());
+            universes.put("marvel", new ArrayList<>());
+            universes.put("rings", new ArrayList<>());
             
-            // convert each json to alien object
+            // read and classify aliens
+            int total = 0;
+            int classified = 0;
+            
             for (JsonNode alienJson : aliensJson) {
+                total++;
                 try {
+                    // convert json to alien
                     Alien alien = mapper.treeToValue(alienJson, Alien.class);
-                    allAliens.add(alien);
+                    
+                    // classify alien
+                    String universe = Classifier.classifyAlien(alien);
+                    universes.get(universe).add(alien);
+                    classified++;
+                    
+                    // debug print
+                    System.out.println("Alien " + alien.getId() + " from " + 
+                                     alien.getPlanet() + " -> " + universe);
+                    
                 } catch (Exception e) {
-                    // skip bad aliens
-                    System.out.println("failed to parse alien: " + alienJson);
+                    System.out.println("failed to process alien: " + e.getMessage());
                 }
             }
             
-            // print all aliens
-            System.out.println("\nAll aliens loaded: " + allAliens.size());
-            for (Alien a : allAliens) {
-                System.out.println(a);
-            }
-            
-            // do some testing with filters
-            System.out.println("\nJust humanoid aliens:");
-            for (Alien a : allAliens) {
-                if (a.getIsHumanoid() != null && a.getIsHumanoid()) {
-                    System.out.println("- " + a.getPlanet());
-                }
-            }
-            
-            // test filtering by id
-            System.out.println("\nAliens with even IDs:");
-            for (Alien a : allAliens) {
-                if (a.getId() % 2 == 0) {
-                    System.out.println("- ID " + a.getId());
-                }
+            // print results
+            System.out.println("\nClassification results:");
+            System.out.println("Total aliens: " + total);
+            System.out.println("Successfully classified: " + classified);
+            System.out.println("\nAliens per universe:");
+            for (Map.Entry<String, List<Alien>> entry : universes.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue().size() + " aliens");
             }
             
         } catch (IOException e) {
