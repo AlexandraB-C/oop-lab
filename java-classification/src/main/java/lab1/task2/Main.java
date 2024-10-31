@@ -2,7 +2,7 @@ package lab1.task2;
 
 public class Main {
     public static void main(String[] args) {
-        String filePath = "java-classification/src/main/java/lab1/resources/test.txt";  // AAAAAAAAAAAAAAAAAA
+        String filePath = "java-classification/src/main/resources/text/test.txt";  // AAAAAAAAAAAAAAAAAA
 
         FileReader reader = new FileReader();
         String text = reader.readFileIntoString(filePath);

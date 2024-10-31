@@ -6,9 +6,9 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         List<String> filePaths = new ArrayList<>();
-        filePaths.add("java-classification/src/main/java/lab1/resources/test.txt");
-        filePaths.add("java-classification/src/main/java/lab1/resources/test1.txt");
-        filePaths.add("java-classification/src/main/java/lab1/resources/test2.txt");
+        filePaths.add("java-classification/src/main/resources/text/test.txt");
+        filePaths.add("java-classification/src/main/resources/text/test1.txt");
+        filePaths.add("java-classification/src/main/resources/text/test2.txt");
         
         FileReader reader = new FileReader();
         List<TextData> analyses = new ArrayList<>();
