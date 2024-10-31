@@ -24,18 +24,27 @@ public class TextData {
     }
 
     private int countVowels() {
-        return text.toLowerCase().replaceAll("[^aeiou]", "").length();
+        return text.toLowerCase()
+                  .replaceAll("[^a-z]", "")
+                  .replaceAll("[^aeiou]", "")
+                  .length();
     }
 
     private int countConsonants() {
-        return text.toLowerCase().replaceAll("[^a-z]", "").replaceAll("[aeiou]", "").length();
+        return text.toLowerCase()
+                  .replaceAll("[^a-z]", "")
+                  .replaceAll("[aeiou]", "")
+                  .length();
     }
 
     private String findLongestWord() {
-        String[] words = text.split("\\s+");
+        String cleanText = text.replaceAll("[^a-zA-Z\\s]", "");
+        String[] words = cleanText.split("\\s+"); // split into words
         String longest = "";
+        
         for (String word : words) {
-            if (word.length() > longest.length()) {
+            // skip empty strings that might result from multiple spaces
+            if (!word.trim().isEmpty() && word.length() > longest.length()) {
                 longest = word;
             }
         }
