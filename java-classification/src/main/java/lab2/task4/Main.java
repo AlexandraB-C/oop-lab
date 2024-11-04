@@ -1,18 +1,29 @@
 package lab2.task4;
 
+import java.util.Scanner;
+
 import lab2.task4.coffee.Barista;
-import lab2.task4.coffee.drinks.Coffee.Intensity;
 
 public class Main {
     public static void main(String[] args) {
-        // create barista
         Barista barista = new Barista();
+        Scanner scanner = new Scanner(System.in);
         
-        // place some orders
-        barista.takeOrder("Pumpkin Spice Latte", Intensity.LIGHT);
-        barista.takeOrder("Cappuccino", Intensity.STRONG);
-        
-        // barista makes all orders
-        barista.serveCoffee();
+        while (true) {
+            System.out.println("\nCoffee Menu:");
+            System.out.println("1. Make order");
+            System.out.println("2. Prepare the order");
+            System.out.println("3. Exit");
+            
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1 -> barista.takeOrder();
+                case 2 -> barista.serveCoffee();
+                case 3 -> {
+                    System.out.println("Thank you :)");
+                    return;
+                }
+            }
+        }
     }
 }
