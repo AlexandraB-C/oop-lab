@@ -121,18 +121,22 @@ public class Barista {
                 case "Americano" -> {
                     Americano americano = new Americano(order.intensity, order.water);
                     americano.printDetails();
+                    americano.makeRecipe();
                 }
                 case "Cappuccino" -> {
                     Cappuccino cappuccino = new Cappuccino(order.intensity, order.milk);
                     cappuccino.printDetails();
+                    cappuccino.makeCappuccino();
                 }
                 case "Syrup Cappuccino" -> {
                     SyrupCappuccino syrupCappuccino = new SyrupCappuccino(order.intensity, order.milk, order.syrup);
                     syrupCappuccino.printDetails();
+                    syrupCappuccino.makeRecipe();
                 }
                 case "Pumpkin Spice Latte" -> {
                     PumpkinSpiceLatte pumpkinSpiceLatte = new PumpkinSpiceLatte(order.intensity, order.milk, order.pumpkinSpice);
                     pumpkinSpiceLatte.printDetails();
+                    pumpkinSpiceLatte.makeRecipe();
                 }
                 default -> System.out.println("Unknown coffee type.");
             }

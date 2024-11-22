@@ -15,9 +15,16 @@ public class Cappuccino extends Coffee {
         System.out.println("Cappuccino milk: " + mlOfMilk + "ml");
     }
 
-    public Cappuccino makeCappuccino() {
-        super.makeCoffee();
+    @Override
+    public void makeRecipe() {
+        super.makeRecipe();
         System.out.println("2. Steaming " + mlOfMilk + "ml of milk");
+    }
+/** 
+     * @return the prepared cappuccino
+     */
+    public Cappuccino makeCappuccino() {
+        this.makeRecipe();
         return this;
     }
 }

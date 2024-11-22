@@ -19,9 +19,16 @@ public class SyrupCappuccino extends Cappuccino {
         System.out.println("Syrup: " + syrup);
     }
 
-    public SyrupCappuccino makeSyrupCappuccino() {
-        super.makeCappuccino();
+    @Override
+    public void makeRecipe() {
+        super.makeRecipe();
         System.out.println("3. Adding " + syrup + " syrup");
+    }
+
+    public SyrupCappuccino makeSyrupCappuccino() {
+        System.out.println("Making a syrup cappuccino");
+        this.makeRecipe();
+        System.out.println("Enjoy the gifts of autumn");
         return this;
     }
 }

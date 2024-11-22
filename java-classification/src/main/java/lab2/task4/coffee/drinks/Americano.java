@@ -15,9 +15,17 @@ public class Americano extends Coffee {
         System.out.println("Americano: " + mlOfWater + "ml of water");
     }
 
-    public Americano makeAmericano() {
-        super.makeCoffee();
+    @Override
+    public void makeRecipe() {
+        super.makeRecipe();
         System.out.println("2. Adding " + mlOfWater + "ml of hot water");
+    }
+
+    public Americano makeAmericano() {
+        System.out.println("Making an americano");
+        this.makeRecipe();
+        System.out.println("Enjoy the gifts of summer");
+
         return this;
     }
 }

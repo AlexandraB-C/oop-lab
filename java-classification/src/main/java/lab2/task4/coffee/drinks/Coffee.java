@@ -19,8 +19,11 @@ public class Coffee {
         System.out.println("Coffee intensity: " + coffeeIntensity);
     }
 
-    protected Coffee makeCoffee() {
+    public void makeRecipe() {
         System.out.println("1. Brewing coffee with " + coffeeIntensity + " intensity");
+    }
+
+    protected Coffee makeCoffee() {
         return this;
     }
 }
