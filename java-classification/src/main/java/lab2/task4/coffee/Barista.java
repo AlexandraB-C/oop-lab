@@ -1,15 +1,15 @@
 package lab2.task4.coffee;
 
-import lab2.task4.coffee.drinks.Coffee.Intensity;
-import lab2.task4.coffee.drinks.Cappuccino;
-import lab2.task4.coffee.drinks.Americano;
-import lab2.task4.coffee.drinks.PumpkinSpiceLatte;
-import lab2.task4.coffee.drinks.SyrupCappuccino;
-import lab2.task4.coffee.drinks.SyrupCappuccino.SyrupType;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import lab2.task4.coffee.drinks.Americano;
+import lab2.task4.coffee.drinks.Cappuccino;
+import lab2.task4.coffee.drinks.Coffee.Intensity;
+import lab2.task4.coffee.drinks.PumpkinSpiceLatte;
+import lab2.task4.coffee.drinks.SyrupCappuccino;
+import lab2.task4.coffee.drinks.SyrupCappuccino.SyrupType;
 
 public class Barista {
     // list to store orders
@@ -24,14 +24,16 @@ public class Barista {
         int water;
         SyrupType syrup;
         int pumpkinSpice;
+        int quantity;
 
-        public CoffeeOrder(String type, Intensity intensity, int milk, int water, SyrupType syrup, int pumpkinSpice) {
+        public CoffeeOrder(String type, Intensity intensity, int milk, int water, SyrupType syrup, int pumpkinSpice, int quantity) {
             this.type = type;
             this.intensity = intensity;
             this.milk = milk;
             this.water = water;
             this.syrup = syrup;
             this.pumpkinSpice = pumpkinSpice;
+            this.quantity = quantity;
         }
     }
 
@@ -54,8 +56,16 @@ public class Barista {
             case 2 -> "Cappuccino";
             case 3 -> "Syrup Cappuccino";
             case 4 -> "Pumpkin Spice Latte";
-            default -> "Americano";
+            case 5 -> "What?";
+            default -> {
+                System.out.println("What? No such drink :(");
+                yield null;
+            }
         };
+
+        if (type == null) {
+            return;
+        }
 
         System.out.println("Select intensity (1-LIGHT, 2-NORMAL, 3-STRONG):");
         Intensity intensity = switch (scanner.nextInt()) {
@@ -91,9 +101,12 @@ public class Barista {
                 pumpkinSpice = scanner.nextInt();
             }
         }
+        // how many of same type
+        System.out.println("How many would you like to order?");
+        int quantity = scanner.nextInt();
 
         // add the order to the list
-        orders.add(new CoffeeOrder(type, intensity, milk, water, syrup, pumpkinSpice));
+        orders.add(new CoffeeOrder(type, intensity, milk, water, syrup, pumpkinSpice, quantity));
         System.out.println("Order added successfully!");
     }
     
@@ -102,7 +115,7 @@ public class Barista {
         System.out.println("Preparing all orders, total: " + orders.size());
     
         for (CoffeeOrder order : orders) {
-            System.out.println("\nPreparing " + order.type + " ");
+            System.out.println("\nPreparing "+ order.quantity + " " + order.type + " " + order.intensity);
     
             switch (order.type) {
                 case "Americano" -> {
