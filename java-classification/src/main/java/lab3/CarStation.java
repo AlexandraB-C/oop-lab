@@ -1,42 +1,47 @@
 package lab3;
-import lab3.Queue_1.Queue;
 
 public class CarStation {
     private Dineable diningService;
     private Refuelable refuelingService;
-    private final Queue<Car> queue;
+    private Queue<Car> carQueue;
 
-    // constructor with dependency injection
-    public CarStation(Dineable diningService, Refuelable refuelingService, Queue<Car> queue) {
+    private int totalCarsProcessed = 0;
+    private int totalConsumption = 0;
+
+    public CarStation(Dineable diningService, Refuelable refuelingService, Queue<Car> carQueue) {
         this.diningService = diningService;
         this.refuelingService = refuelingService;
-        this.queue = queue;
+        this.carQueue = carQueue;
     }
 
     public void addCar(Car car) {
-        queue.enqueue(car);
+        carQueue.enqueue(car);
     }
 
     public void serveCars() {
-        while (!queue.isEmpty()) {
-            Car car = queue.dequeue();
-            
-            // serve dinner based on passenger type and dining preference
-            if (car.isDining()) {
-                if (car.getPassengers().equals("PEOPLE")) {
-                    diningService = new PeopleDinner();
-                } else if (car.getPassengers().equals("ROBOTS")) {
-                    diningService = new RobotDinner();
-                }
-                diningService.serveDinner(String.valueOf(car.getId()), car.isDining());
+        while (!carQueue.isEmpty()) {
+            Car car = carQueue.dequeue();
+            if (car.getPassengers().equals("ROBOTS")){
+                RobotDinner.countRobots();
             }
+            if (car.getPassengers().equals("PEOPLE")){
+                PeopleDinner.countPeople();
+            }
+            diningService.serveDinner(car);
 
-            if (car.getType().equals("ELECTRIC")) {
-                refuelingService = new ElectricStation();
-            } else if (car.getType().equals("GAS")) {
-                refuelingService = new GasStation();
-            }
-            refuelingService.refuel(String.valueOf(car.getId()));
+            refuelingService.refuel(car.getId());
+            totalCarsProcessed++;
+            totalConsumption += car.getConsumption();
+            System.out.println("Car " + car.getId() + " has been served.\n");
         }
     }
+
+    public int getTotalCarsProcessed() {
+        return totalCarsProcessed;
+    }
+
+    public int getTotalConsumption() {
+        return totalConsumption;
+    }
+
 }

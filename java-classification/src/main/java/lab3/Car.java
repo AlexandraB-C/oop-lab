@@ -44,4 +44,9 @@ public class Car {
     public int getConsumption() {
         return consumption;
     }
+
+    @Override
+    public String toString() {
+        return "Car"  + id;
+    }
 }

@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
-import lab3.Queue_1.CircularQueue;
-import lab3.Queue_1.LinkedQueue;
-import lab3.Queue_1.Queue;
+import lab3.CircularQueue;
+import lab3.LinkedQueue;
+import lab3.Queue;
 
 public class QueueTest {
 

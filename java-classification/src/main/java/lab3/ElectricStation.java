@@ -1,15 +1,13 @@
 package lab3;
 
-public class ElectricStation implements Refuelable {
-    private static int electricCarsServedCount = 0;
+public class ElectricStation implements Refuelable{
+    private int refueledCount = 0;
+    private int totalElectricConsumption = 0;
 
     @Override
-    public void refuel(String carId) {
-        System.out.println("Refueling electric car: " + carId);
-        electricCarsServedCount++;
+    public void refuel(int carId) {
+        System.out.println("Refueling electric car " + carId);
+        refueledCount++;
     }
 
-    public static int getElectricCarsServedCount() {
-        return electricCarsServedCount;
-    }
 }

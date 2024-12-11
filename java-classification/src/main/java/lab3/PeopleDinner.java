@@ -1,25 +1,41 @@
 package lab3;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class PeopleDinner implements Dineable {
-    private static int peopleServedCount = 0;
-    private static int peopleNotDiningCount = 0;
+    private int servedCount = 0;
+    private Set<Integer> skippedCars = new HashSet<>();
+    private static int totalPeople = 0;
+    private static int totalDining = 0;
+    private static int totalNotDining = 0;
 
     @Override
-    public void serveDinner(String carId, boolean shouldDine) {
-        if (shouldDine) {
-            System.out.println("Serving dinner to people in car " + carId);
-            peopleServedCount++;
+    public void serveDinner(Car car) {
+        if (car.isDining()) {
+            System.out.println("Serving dinner to people in car " + car.getId());
+            servedCount++;
+            totalDining++;
         } else {
-            System.out.println("People in car " + carId + " chose not to dine");
-            peopleNotDiningCount++;
+            System.out.println("😔 Skipping dinner for the people in car " + car.getId());
+            skippedCars.add(car.getId());
+            totalNotDining++;
         }
     }
 
-    public static int getPeopleServedCount() {
-        return peopleServedCount;
+    public static void countPeople() {
+        totalPeople++;
     }
 
-    public static int getPeopleNotDiningCount() {
-        return peopleNotDiningCount;
+    public static int getTotalPeople() {
+        return totalPeople;
+    }
+
+    public static int getTotalDining() {
+        return totalDining;
+    }
+
+    public static int getTotalNotDining() {
+        return totalNotDining;
     }
 }
