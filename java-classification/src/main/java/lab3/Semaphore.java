@@ -120,7 +120,7 @@ public class Semaphore {
     }
 
     private void shutdownProgram() {
-        System.out.println("Shutting down the program...");
+        System.out.println(":)...");
         System.exit(0);
     }
 
@@ -152,14 +152,14 @@ public class Semaphore {
         }
 
         System.out.println("Totals:");
-        System.out.println("{\"ELECTRIC\": " + typeCounts.get("ELECTRIC") +
-                ", \"GAS\": " + typeCounts.get("GAS") +
-                ", \"PEOPLE\": " + totalPeople +
-                ", \"ROBOTS\": " + totalRobots +
-                ", \"DINING\": " + totalDining +
-                ", \"NOT_DINING\": " + totalNotDining +
-                ", \"CONSUMPTION\": {\"ELECTRIC\": " + consumptionTotals.get("ELECTRIC") +
-                ", \"GAS\": " + consumptionTotals.get("GAS") + "}}");
+        System.out.println("ELECTRIC: " + typeCounts.get("ELECTRIC") + "\n" +
+                "GAS: " + typeCounts.get("GAS") + "\n" +
+                "PEOPLE: " + totalPeople  + "\n" +
+                "ROBOTS: " + totalRobots + "\n" +
+                "DINING: " + totalDining + "\n" +
+                "NOT_DINING: " + totalNotDining + "\n" +
+                "    CONSUMPTION:" + "\n ELECTRIC: " + consumptionTotals.get("ELECTRIC") +
+                ", GAS: " + consumptionTotals.get("GAS"));
     }
 
 }
