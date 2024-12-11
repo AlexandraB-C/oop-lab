@@ -2,7 +2,7 @@ package lab3;
 
 public class Main {
     public static void main(String[] args) {
-        String folderPath = "java-classification\\queue";
+        String folderPath = "java-classification\\\\src\\\\main\\\\java\\\\lab3\\\\queue";
         //String folderPath = "oop-lab\\queue";
 
         Semaphore semaphore = new Semaphore();
